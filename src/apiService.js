@@ -7,6 +7,7 @@ function sanitize(obj) {
   }
   //objects are mutated so no need to return
 }
+
 const QueueService = {
   getNext(type, req) {
     const queue = req.app.get(`${type}Queue`);
@@ -63,6 +64,20 @@ const QueueService = {
       return res.status(404).json({ error: `No ${type}s found.` });
     }
     res.json(result);
+  },
+  validateType(type, req, res) {
+    if (req.app.get('queues').includes(type)) {
+      return true;
+    }
+    this.badEndpoint(res);
+    return false;
+  },
+  badEndpoint(res) {
+    //same response as would be returned if each endpoint was individually defined and someone hit a non-existing endpoint
+    return res.status(404).json({
+      message: 'Not Found',
+      error: {}
+    });
   }
 };
 

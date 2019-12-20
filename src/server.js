@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const petRouter = require('./pet-router');
+const userRouter = require('./userRouter');
 const app = express();
 const Queue = require('./queue');
 const { CLIENT_ORIGIN, PORT } = require('./config');
@@ -8,9 +9,12 @@ app.use(cors({ origin: CLIENT_ORIGIN }));
 
 const catQueue = new Queue();
 const dogQueue = new Queue();
+const userQueue = new Queue();
+
 app.set('catQueue', catQueue);
 app.set('dogQueue', dogQueue);
-
+app.set('userQueue', userQueue);
+app.use('/api/users', userRouter);
 app.use('/api', petRouter);
 
 // Catch-all 404

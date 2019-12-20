@@ -18,7 +18,7 @@ apiRouter
     if (!ApiService.validateType(type, req, res)) {
       return;
     }
-    const added = addPet(type, req);
+    const added = add(type, req);
     ApiService.sendResponse(type, added, res);
   })
   .delete((req, res) => {

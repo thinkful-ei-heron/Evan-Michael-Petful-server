@@ -43,34 +43,32 @@ if (NODE_ENV === 'development' || NODE_ENV === 'demo') {
   //fake other users adopting out pets, and don't remain out of pets for long
   setInterval(() => {
     let peekUser = userQueue.first;
+
     if (
       peekUser &&
       !['John', 'Paul', 'Ringo', 'George'].includes(peekUser.name)
     ) {
       //if the user up front is one of our demo users
-      if (
-        (peekUser.cat && catQueue.first) ||
-        (peekUser.dog && dogQueue.first)
-      ) {
-        let user = userQueue.dequeue();
-        if (user.cat && catQueue.first) {
-          catQueue.dequeue();
-        }
-        if (user.dog && dogQueue.first) {
-          dogQueue.dequeue();
-        }
+
+      let user = userQueue.dequeue();
+      if (user.cat && catQueue.first !== null) {
+        catQueue.dequeue();
+      }
+      if (user.dog && dogQueue.first !== null) {
+        dogQueue.dequeue();
       }
     }
-    if (!catQueue.first) {
+
+    if (catQueue.first === null) {
       setDemoCats();
     }
-    if (!dogQueue.first) {
+    if (dogQueue.first === null) {
       setDemoDogs();
     }
-    if (!peekUser) {
+    if (peekUser === null) {
       setDemoUsers();
     }
-  }, 10000);
+  }, 05000);
 }
 
 function setDemoCats() {

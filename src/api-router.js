@@ -28,6 +28,10 @@ apiRouter
     }
     const removed = ApiService.remove(type, req);
     ApiService.sendResponse(type, removed, res);
+    if(!removed) {
+      const restart = req.app.get('restart');
+      restart();
+    }
   });
 apiRouter.route('/:type/all').get((req, res) => {
   const type = req.params.type;

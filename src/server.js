@@ -38,5 +38,12 @@ app.listen(PORT, () => {
   console.log(`Serving on ${PORT}`);
 });
 
+function restart(){
+  catArray.map(cat => catQueue.enqueue(cat));
+  dogArray.map(dog => dogQueue.enqueue(dog));
+}
+
+app.set('restart', restart);
+
 catArray.map(cat => catQueue.enqueue(cat));
 dogArray.map(dog => dogQueue.enqueue(dog));

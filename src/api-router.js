@@ -18,7 +18,13 @@ apiRouter
     if (!ApiService.validateType(type, req, res)) {
       return;
     }
-    const added = add(type, req);
+    let added;
+    if (type === 'user') {
+      added = ApiService.addUser(type, req);
+    } else {
+      added = addPet(type, req);
+    }
+
     ApiService.sendResponse(type, added, res);
   })
   .delete((req, res) => {
@@ -28,7 +34,7 @@ apiRouter
     }
     const removed = ApiService.remove(type, req);
     ApiService.sendResponse(type, removed, res);
-    if(!removed) {
+    if (!removed) {
       const restart = req.app.get('restart');
       restart();
     }

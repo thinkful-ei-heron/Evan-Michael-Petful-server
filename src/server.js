@@ -16,7 +16,10 @@ app.set('dogQueue', dogQueue);
 app.set('userQueue', userQueue);
 app.set('queues', ['cat', 'dog', 'user']);
 app.use('/api', apiRouter);
-
+app.route('/reset').post((req, res) => {
+  restart();
+  res.status(204).send();
+});
 // Catch-all 404
 app.use(function(req, res, next) {
   const err = new Error('Not Found');
@@ -38,7 +41,7 @@ app.listen(PORT, () => {
   console.log(`Serving on ${PORT}`);
 });
 
-function restart(){
+function restart() {
   catArray.map(cat => catQueue.enqueue(cat));
   dogArray.map(dog => dogQueue.enqueue(dog));
 }

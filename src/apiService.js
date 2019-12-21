@@ -19,7 +19,7 @@ const QueueService = {
     return pet;
   },
 
-  add(type, req) {
+  addPet(type, req) {
     const {
       imageURL,
       imageDescription,
@@ -35,7 +35,14 @@ const QueueService = {
     queue.enqueue(newPet);
     return newPet;
   },
-
+  addUser(req) {
+    const queue = req.app.get('userQueue');
+    const { name } = req.body;
+    const newPerson = { name };
+    sanitize(newPerson);
+    queue.enqueue(newPerson);
+    return newPerson;
+  },
   getAll(type, req) {
     const queue = req.app.get(`${type}Queue`);
     if (queue.first === null) {

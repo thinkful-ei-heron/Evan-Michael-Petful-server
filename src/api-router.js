@@ -30,6 +30,7 @@ apiRouter
   .delete((req, res) => {
     const type = req.params.type;
     if (!ApiService.validateType(type, req, res)) {
+      console.log(type);
       return;
     }
     const removed = ApiService.remove(type, req);

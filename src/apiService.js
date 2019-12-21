@@ -39,7 +39,7 @@ const QueueService = {
   getNext(type, req) {
     const queue = req.app.get(`${type}Queue`);
     if (queue.first === null) {
-      null;
+      return null;
     }
     const pet = queue.first.value;
     sanitize(pet);

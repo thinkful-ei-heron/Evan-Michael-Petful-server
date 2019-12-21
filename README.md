@@ -39,3 +39,5 @@ DELETE /api/user /api/cat /api/dog: dequeue from the respective queue, returning
 When the person at the front of the line adopts an animal, DELETE /api/user and /api/cat or /api/dog (as appropriate)
 
 This is deployed on https://thawing-brushlands-60226.herokuapp.com/api/dog/all in a demo mode, with cats, dogs, and users cycling through. The fake users are named 'John', 'Paul', 'George', or 'Ringo'. If you wish to test a client against this demo, avoid using these names.
+
+Express/Node.js on Heroku

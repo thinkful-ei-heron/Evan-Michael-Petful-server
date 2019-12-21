@@ -20,7 +20,7 @@ apiRouter
     }
     let added;
     if (type === 'user') {
-      added = ApiService.addUser(type, req);
+      added = ApiService.addUser(req);
     } else {
       added = addPet(type, req);
     }

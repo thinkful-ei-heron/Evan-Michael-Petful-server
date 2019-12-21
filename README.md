@@ -30,7 +30,7 @@ GET /api/user to view the next person in line to adopt an animal, learning their
       "dog": true
     }
 
-POST /api/cat or /api/dog to add an animal to the respective queue. Accepts keys listed above. All keys are required. If successful, returns JSON representation of the added animal.
+POST /api/cat or /api/dog to add an animal to the respective queue. Accepts keys as above. All keys are required. If successful, returns JSON representation of the added animal.
 
 POST /api/user to add a user to the line. All keys are required. If successful, returns JSON representation of the added user.
 

@@ -67,7 +67,6 @@ const QueueService = {
   },
   addUser(req) {
     const { name, cat, dog } = req.body;
-    console.log(name);
     const newPerson = { name, cat, dog };
     if (!validate(newPerson, 'user')) {
       return { error: 'Missing key(s) or key(s) not appropriate type' };

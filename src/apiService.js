@@ -8,6 +8,33 @@ function sanitize(obj) {
   //objects are mutated so no need to return
 }
 
+function validate(obj, type) {
+  let requiredKeys;
+  if (type === 'user') {
+    requiredKeys = {
+      name: 'string',
+      cat: 'boolean',
+      dog: 'boolean'
+    };
+  } else {
+    requiredKeys = {
+      imageURL: 'string',
+      imageDescription: 'string',
+      name: 'string',
+      sex: 'string',
+      age: 'number',
+      breed: 'string',
+      story: 'string'
+    };
+  }
+
+  for (let key of Object.keys(requiredKeys)) {
+    if (typeof obj[key] !== requiredKeys[key]) {
+      return false;
+    }
+  }
+  return true;
+}
 const QueueService = {
   getNext(type, req) {
     const queue = req.app.get(`${type}Queue`);
@@ -29,24 +56,30 @@ const QueueService = {
       breed,
       story
     } = req.body;
-    const queue = req.app.get(`${type}Queue`);
     const newPet = { imageURL, imageDescription, name, sex, age, breed, story };
+    if (!validate(newPet, 'pet')) {
+      return { error: 'Missing key(s) or key(s) not appropriate type' };
+    }
     sanitize(newPet);
+    const queue = req.app.get(`${type}Queue`);
     queue.enqueue(newPet);
     return newPet;
   },
   addUser(req) {
-    const queue = req.app.get('userQueue');
-    const { name } = req.body;
-    const newPerson = { name };
+    const { name, cat, dog } = req.body;
+    const newPerson = { name, cat, dog };
+    if (!validate(newPerson, 'user')) {
+      return { error: 'Missing key(s) or key(s) not appropriate type' };
+    }
     sanitize(newPerson);
+    const queue = req.app.get('userQueue');
     queue.enqueue(newPerson);
     return newPerson;
   },
   getAll(type, req) {
     const queue = req.app.get(`${type}Queue`);
     if (queue.first === null) {
-      [];
+      return [];
     }
 
     let pets = [];

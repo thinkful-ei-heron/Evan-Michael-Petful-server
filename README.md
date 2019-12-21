@@ -1,26 +1,41 @@
-# Express Boilerplate!
+## Contributors
 
-This is a boilerplate project used for starting new projects!
+Evan Vogts
+Michael Kirsch
 
-## How do set up?
+## API
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+GET /api/cat or /api/dog to view the next animal in the respective queue.
+Returns JSON representation of the animal.
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+    GET /api/dog
 
-## Scripts
+    {
+      "imageURL": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Mops_oct09_cropped2.jpg",
+      "imageDescription": "Cute pup on a walk",
+      "name": "Felicia",
+      "sex": "F",
+      "age": 2,
+      "breed": "Pug",
+      "story": "Her owner passed away soon after Felicia was born"
+    }
 
-Start the application `npm start`
+GET /api/user to view the next person in line to adopt an animal, learning their name and their interest in adopting a cat or dog.
 
-Start nodemon for the application `npm run dev`
+    GET /api/user
 
-Run the tests in watch mode `npm test`
+    {
+      "name": "John",
+      "cat": true,
+      "dog": true
+    }
 
-## Deploying
+POST /api/cat or /api/dog to add an animal to the respective queue. Accepts keys listed above. All keys are required. If successful, returns JSON representation of the added animal.
 
-When your new project is ready for deployment, add a new heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+POST /api/user to add a user to the line. All keys are required. If successful, returns JSON representation of the added user.
+
+DELETE /api/user /api/cat /api/dog: dequeue from the respective queue, returning a JSON representation of the dequeued entity.
+
+When the person at the front of the line adopts an animal, DELETE /api/user and /api/cat or /api/dog (as appropriate)
+
+This is deployed on https://thawing-brushlands-60226.herokuapp.com/api/dog/all in a demo mode, with cats, dogs, and users cycling through. The fake users are named 'John', 'Paul', 'George', or 'Ringo'. If you wish to test a client against this demo, avoid using these names.

@@ -7,9 +7,9 @@ const { CLIENT_ORIGIN, PORT, NODE_ENV } = require('./config');
 const { dogArray, catArray, userArray } = require('./PetQueue');
 app.use(cors({ origin: CLIENT_ORIGIN }));
 
-const catQueue = new Queue();
-const dogQueue = new Queue();
-const userQueue = new Queue();
+let catQueue = new Queue();
+let dogQueue = new Queue();
+let userQueue = new Queue();
 
 app.set('catQueue', catQueue);
 app.set('dogQueue', dogQueue);
@@ -80,7 +80,21 @@ function setDemoUsers() {
   userArray.map(user => userQueue.enqueue(user));
 }
 
-app.set('restart', setDemoCats);
+if (NODE_ENV === 'test') {
+  //need to be able to manipulate state for testing
+  function clearAll() {
+    catQueue = new Queue();
+    dogQueue = new Queue();
+    userQueue = new Queue();
+  }
+  function setTestContents() {
+    setDemoCats();
+    setDemoDogs();
+    setDemoUsers();
+    app.set('catQueue', catQueue);
+    app.set('dogQueue', dogQueue);
+    app.set('userQueue', userQueue);
+  }
 
-catArray.map(cat => catQueue.enqueue(cat));
-dogArray.map(dog => dogQueue.enqueue(dog));
+  module.exports = { app, clearAll, setTestContents };
+}

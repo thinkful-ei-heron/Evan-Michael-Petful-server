@@ -101,7 +101,7 @@ const QueueService = {
 
   sendResponse(type, result, res) {
     if (!result) {
-      return res.status(404).json({ error: `No ${type}s found.` });
+      return res.status(200).json({ status: `${type} queue empty` });
     }
     res.json(result);
   },

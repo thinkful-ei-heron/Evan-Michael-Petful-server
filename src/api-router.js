@@ -22,7 +22,7 @@ apiRouter
     if (type === 'user') {
       added = ApiService.addUser(req);
     } else {
-      added = addPet(type, req);
+      added = ApiService.addPet(type, req);
     }
 
     ApiService.sendResponse(type, added, res);

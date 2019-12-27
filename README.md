@@ -1,3 +1,9 @@
+# Petful
+
+## Summary
+
+This is the server for the 'Petful' full stack project for Thinkful. It represents a strictly FIFO process for matching people to cats and/or dogs.
+
 ## Contributors
 
 Evan Vogts
